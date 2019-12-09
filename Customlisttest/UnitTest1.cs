@@ -226,6 +226,16 @@ namespace Customlisttest
         //To String
         #region
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void ToString_Nothing_ExpectException()
+        {
+            MyList<string> list = new MyList<string>();
+            //arrange
+            string actual;
+            //act
+            actual = list.ToString();
+        }
+        [TestMethod]
         public void ToString_String_ExpectSameString()
         {
             MyList<string> list = new MyList<string>();
@@ -389,7 +399,7 @@ namespace Customlisttest
             Assert.AreEqual(expect, actual);
         }
         [TestMethod]
-        public void Minus_TwoList_ExpectItemsOfList2GoneFromList1()
+        public void Minus_TwoList_ExpectItemsOfList2GoneFromNewList()
         {
             MyList<int> list = new MyList<int>() { 1, 2, 3, 4, 5, 6 };
             MyList<int> list2 = new MyList<int>() { 2, 4, 6 };
@@ -449,48 +459,76 @@ namespace Customlisttest
 
         //Zip
         #region
-        //[TestMethod]
-        //public void Zip_2List_ExpectListOrder()
-        //{
-        //    MyList<int> list = new MyList<int>();
-        //    MyList<int> list2 = new MyList<int>();
-        //    MyList<int> myList = new MyList<int>();
-        //    MyList<int> holder = new MyList<int>();
-        //    //arrange
-        //    int expect = 1;
-        //    int actual;
-        //    int expect2 = 2;
-        //    int actual2;
-        //    //act
-        //    list.Add(1);
-        //    list.Add(3);
-        //    list2.Add(2);
-        //    list2.Add(4);
-        //    holder = myList.Zip(list, list2);
-        //    actual = holder[0];
-        //    actual2 = holder[1];
-        //    //assert
-        //    Assert.AreEqual(expect, actual);
-        //    Assert.AreEqual(expect2, actual2);
-        //}
-        //[TestMethod]
-        //public void Zip_2List_ExpectCountOfListPlusList2()
-        //{
-        //    MyList<int> list = new MyList<int>();
-        //    MyList<int> list2 = new MyList<int>();
-        //    MyList<int> bothList = new MyList<int>();
-        //    //arrange
-        //    int expect = 4;
-        //    int actual;
-        //    //act
-        //    list.Add(1);
-        //    list.Add(3);
-        //    list2.Add(2);
-        //    list2.Add(4);
-        //    actual = bothList.Zip(list, list2).Count;
-        //    //assert
-        //    Assert.AreEqual(expect, actual);
-        //}
+        [TestMethod]
+        public void Zip_2List_ExpectListOrder()
+        {
+            MyList<int> list = new MyList<int>();
+            MyList<int> list2 = new MyList<int>();
+            MyList<int> myList = new MyList<int>();
+            MyList<int> holder = new MyList<int>();
+            //arrange
+            int expect = 1;
+            int actual;
+            int expect2 = 2;
+            int actual2;
+            //act
+            list.Add(1);
+            list.Add(3);
+            list2.Add(2);
+            list2.Add(4);
+            holder = myList.Zip(list, list2);
+            actual = holder[0];
+            actual2 = holder[1];
+            //assert
+            Assert.AreEqual(expect, actual);
+            Assert.AreEqual(expect2, actual2);
+        }
+        [TestMethod]
+        public void Zip_2List_ExpectCountOfListPlusList2()
+        {
+            MyList<int> list = new MyList<int>();
+            MyList<int> list2 = new MyList<int>();
+            MyList<int> bothList = new MyList<int>();
+            //arrange
+            int expect = 4;
+            int actual;
+            //act
+            list.Add(1);
+            list.Add(3);
+            list2.Add(2);
+            list2.Add(4);
+            actual = bothList.Zip(list, list2).Count;
+            //assert
+            Assert.AreEqual(expect, actual);
+        }
+        [TestMethod]
+        public void Zip_ListOfBiggerSize_ExpectToZipWithLongerList2()
+        {
+            MyList<int> list = new MyList<int>() { 1, 3, 5 };
+            MyList<int> list2 = new MyList<int>() { 2, 4, 6, 8, 9, 10 };
+            //arrange
+            int actual;
+            int expect = 9;
+            //act
+            list.Zip(list2);
+            actual = list[7];
+            //assert
+            Assert.AreEqual(expect, actual);
+        }
+        [TestMethod]
+        public void Zip_ListOfBiggerSize_ExpectToZipWithLongList1()
+        {
+            MyList<int> list = new MyList<int>() { 1, 3, 5, 7, 8, 9 };
+            MyList<int> list2 = new MyList<int>() { 2, 4, 6 };
+            //arrange
+            int actual;
+            int expect = 8;
+            //act
+            list.Zip(list2);
+            actual = list[7];
+            //assert
+            Assert.AreEqual(expect, actual);
+        }
         [TestMethod]
         public void Zip_List_ExpectCountToBeBothList()
         {
@@ -524,14 +562,14 @@ namespace Customlisttest
             Assert.AreEqual(expect2, actual2);
         }
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void Zip_List_ExpectException()
         {
             MyList<int> list = new MyList<int>() { 1, 3, 5 };
             MyList<int> list2 = new MyList<int>() { 2, 4, 6 };
             //act
             list.Zip(list2);
-            int actual = list[7];
+            int actual = list[6];
         }
         [TestMethod]
         public void Zip_List_ExpectCombinedCapacity()
@@ -550,7 +588,7 @@ namespace Customlisttest
         [TestMethod]
         public void Zip_ListOfString_ExpectZipStringList()
         {
-            MyList<string> list = new MyList<string>() { "hi", "i", "great" };
+            MyList<string> list = new MyList<string>() { "hi", "i", "greatest" };
             MyList<string> list2 = new MyList<string>() { "world", "am", "." };
             //arrange
             string actual;
