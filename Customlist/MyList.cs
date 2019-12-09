@@ -36,7 +36,7 @@ namespace Customlist
         {
             get
             {
-                if (index >= 0 && index <= count)
+                if (index >= 0 && index < count)
                 {
                     return customList[index];
                 }
@@ -47,7 +47,7 @@ namespace Customlist
             }
             set
             {
-                if (index >= 0 && index <= count)
+                if (index >= 0 && index < count)
                 {
                     customList[index] = value;
                 }
@@ -112,7 +112,12 @@ namespace Customlist
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return customList.GetEnumerator();
+            T[] temp = new T[count];
+            for (int i = 0; i < count; i++)
+            {
+                temp[i] = customList[i];
+            }
+            return temp.GetEnumerator();
         }
         public override string ToString()
         {
