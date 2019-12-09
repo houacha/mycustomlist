@@ -208,7 +208,7 @@ namespace Customlisttest
             Assert.AreEqual(expect, actual);
         }
         [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Remove_PositiveNum_ExpectRemoveLast()
         {
             MyList<int> list = new MyList<int>();
@@ -444,7 +444,7 @@ namespace Customlisttest
             Assert.AreEqual(expect, actual);
         }
         [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Minus_TwoList_ExpectExceptionArguementOutOfRange()
         {
             MyList<int> list = new MyList<int>() { 1, 2, 3 };
@@ -562,7 +562,7 @@ namespace Customlisttest
             Assert.AreEqual(expect2, actual2);
         }
         [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Zip_List_ExpectException()
         {
             MyList<int> list = new MyList<int>() { 1, 3, 5 };

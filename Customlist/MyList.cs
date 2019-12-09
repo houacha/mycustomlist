@@ -112,12 +112,10 @@ namespace Customlist
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            T[] temp = new T[count];
             for (int i = 0; i < count; i++)
             {
-                temp[i] = customList[i];
+                yield return customList[i];
             }
-            return temp.GetEnumerator();
         }
         public override string ToString()
         {
