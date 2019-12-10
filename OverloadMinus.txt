@@ -1,26 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+List (-) Operator Overload
 
-namespace Customlist
-{
-    class Program
-    {
+--------------------------------------------------------------
+
+Removes all occurence of a MyList<T> from another MyList<T> and returns a new MyList<T>.
+[C#]
+[ MyList<T>result = MyList<T>list - MyList<T>list2 ]
+
+Parameters
+MyList<T> list, MyList<T> list2
+The minus operator uses parameters but for all intent and purposes the parameters are just the two list required.
+
+Returns
+MyList<T> return
+with the values of the second MyList<T> from the first MyList<T>. If no values were remove, the first MyList<T> remains unchanged.
+
+--------------------------------------------------------------
+
+Examples:
+
         static void Main(string[] args)
         {
             // First lists
+
             MyList<int> nums = new MyList<int>() { 1, 3, 5, 3};
             MyList<string> list = new MyList<string> { "hi", "hello", "bonjour", "world" };
             MyList<int> numberList = new MyList<int> { 2, 3, 4, 5, 6, };
 
             // Second lists
+
             MyList<int> nums2 = new MyList<int>() { 3, 5 };
             MyList<string> list2 = new MyList<string> { "hi", "bonjour" };
             MyList<int> numberList2 = new MyList<int> { 3, 4, 5 };
 
             // Resulting lists
+
             MyList<int> numsResult = new MyList<int>();
             MyList<string> listResult = new MyList<string>();
             MyList<int> numberListResult = new MyList<int>();
@@ -34,9 +47,8 @@ namespace Customlist
             Console.WriteLine(numsResult);
             Console.WriteLine(listResult);
             Console.WriteLine(numberListResult);
+
             // 1
             // hiworld
             // 26
         }
-    }
-}

@@ -136,21 +136,13 @@ namespace Customlist
         public static MyList<T> operator +(MyList<T> list, MyList<T> list2)
         {
             MyList<T> concatLists = new MyList<T>();
-            T[] temp = new T[list.count + list2.count];
-            int currentLoop = 0;
             for (int i = 0; i < list.count; i++)
             {
-                temp[i] = list[i];
-                currentLoop++;
+                concatLists.Add(list[i]);
             }
             for (int j = 0; j < list2.count; j++)
             {
-                temp[currentLoop] = list2[j];
-                currentLoop++;
-            }
-            for (int l = 0; l < (list.count + list2.count); l++)
-            {
-                concatLists.Add(temp[l]);
+                concatLists.Add(list2[j]);
             }
             concatLists.capacity = list.capacity + list2.capacity;
             return concatLists;
@@ -462,6 +454,10 @@ namespace Customlist
             count = 0;
             capacity = 0;
             customList = new T[capacity];
+        }
+        public void Sort<X>() where X : IComparable
+        {
+
         }
     }
 }
