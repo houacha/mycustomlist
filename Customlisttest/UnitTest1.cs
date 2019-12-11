@@ -321,25 +321,6 @@ namespace Customlisttest
             Assert.AreEqual(expect, actual);
         }
         [TestMethod]
-        public void OverloadPlus_TwoList_ExpectCapacityEqualsBothList()
-        {
-            MyList<int> list = new MyList<int>();
-            MyList<int> list2 = new MyList<int>();
-            MyList<int> myList = new MyList<int>();
-            //arrange
-            int expect = 8;
-            int actual;
-            //act
-            list.Add(1);
-            list.Add(2);
-            list2.Add(3);
-            list2.Add(4);
-            myList = list + list2;
-            actual = myList.Capacity;
-            //assert
-            Assert.AreEqual(expect, actual);
-        }
-        [TestMethod]
         public void OverloadPlus_TwoList_ExpectNewCount()
         {
             MyList<int> list = new MyList<int>();

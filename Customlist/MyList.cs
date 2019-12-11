@@ -63,26 +63,23 @@ namespace Customlist
             if (count == capacity)
             {
                 capacity *= 2;
-            }
-            temp = new T[count];
-            for (int j = 0; j < count; j++)
-            {
-                temp[j] = customList[j];
-            }
-            customList = new T[capacity];
-            for (int i = 0; i < count; i++)
-            {
-                customList[i] = temp[i];
+                temp = new T[capacity];
+                for (int j = 0; j < count; j++)
+                {
+                    temp[j] = customList[j];
+                }
+                customList = temp;
             }
             customList[count] = item;
             count++;
         }
-        public void Remove(T item)
+        public bool Remove(T item)
         {
             T[] temp = new T[count];
             int firstItem = 0;
             int nextItem = 0;
             int countHold = count;
+            bool removed = false;
             if (count > 0)
             {
                 for (int i = 0; i < countHold; i++)
@@ -90,6 +87,7 @@ namespace Customlist
                     if (customList[i].Equals(item) && firstItem == 0)
                     {
                         firstItem = 1;
+                        removed = true;
                         count--;
                     }
                     else if (nextItem == 0 && firstItem == 1)
@@ -104,11 +102,8 @@ namespace Customlist
                     }
                 }
             }
-            customList = new T[count];
-            for (int j = 0; j < count; j++)
-            {
-                customList[j] = temp[j];
-            }
+            customList = temp;
+            return removed;
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -144,7 +139,6 @@ namespace Customlist
             {
                 concatLists.Add(list2[j]);
             }
-            concatLists.capacity = list.capacity + list2.capacity;
             return concatLists;
         }
         public static MyList<T> operator -(MyList<T> list, MyList<T> list2)
@@ -154,19 +148,10 @@ namespace Customlist
             {
                 combinedList.Add(list[i]);
             }
-            for (int j = 0; j < combinedList.count; j++)
+            for (int j = 0; j < list2.count; j++)
             {
-                for (int l = 0; l < list2.count; l++)
-                {
-                    if (combinedList[j].Equals(list2[l]))
-                    {
-                        combinedList.Remove(list2[l]);
-                        j = -1;
-                        break;
-                    }
-                }
+                combinedList.Remove(list2[j]);
             }
-            combinedList.capacity = list.capacity;
             return combinedList;
         }
         public MyList<T> Zip(MyList<T> list, MyList<T> list2)
@@ -298,32 +283,25 @@ namespace Customlist
             T[] temp = new T[count + 1];
             int currentIndex = 0;
             int countHold = count;
-            if (count == 0 && index > 0)
+            if (count == capacity)
             {
-                throw new ArgumentOutOfRangeException("'Can't touch this,' MC hammer");
+                capacity *= 2;
             }
-            else
+            for (int i = 0; i < countHold; i++)
             {
-                if (count == capacity)
+                if (i == index)
                 {
-                    capacity *= 2;
-                }
-                for (int i = 0; i < countHold; i++)
-                {
-                    if (i == index)
-                    {
-                        temp[currentIndex] = item;
-                        currentIndex++;
-                        count++;
-                    }
-                    temp[currentIndex] = customList[i];
+                    temp[currentIndex] = item;
                     currentIndex++;
+                    count++;
                 }
-                customList = new T[count];
-                for (int j = 0; j < count; j++)
-                {
-                    customList[j] = temp[j];
-                }
+                temp[currentIndex] = customList[i];
+                currentIndex++;
+            }
+            customList = new T[count];
+            for (int j = 0; j < count; j++)
+            {
+                customList[j] = temp[j];
             }
         }
         public void Replace(int index, T item)
@@ -454,10 +432,6 @@ namespace Customlist
             count = 0;
             capacity = 0;
             customList = new T[capacity];
-        }
-        public void Sort<X>() where X : IComparable
-        {
-
         }
     }
 }
